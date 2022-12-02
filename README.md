@@ -1,4 +1,4 @@
-[![Contributors]]Dragan Jelić, Ilija Popović, Mihajlo Žigić, Luka Prćić i Nemanja Mitrić
+Contributors: Dragan Jelić, Ilija Popović, Mihajlo Žigić, Luka Prćić i Nemanja Mitrić
 
 
 
