@@ -13,14 +13,11 @@
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
-<<<<<<< HEAD
-=======
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
->>>>>>> da5427f8129987c2066b2f94cf338425bb6b1ebd
       </GradleProjectSettings>
     </option>
   </component>
