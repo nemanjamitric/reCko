@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="380dp"
     tools:context=".leaderboard">
 
     <LinearLayout
@@ -17,20 +17,22 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TableLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="300dp"
             android:backgroundTint="#000">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
-                <TextView>dragam</TextView>
-
+                <TextView android:text="dragan" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent" >
+                <TextView android:text="dragan1" />
+
+            </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
