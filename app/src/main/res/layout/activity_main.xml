@@ -13,14 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-<<<<<<< HEAD
-        android:background="#000000"
-=======
->>>>>>> 517fcde1bc2a5f17d8d107e691e9ceb10c808ff2
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="#000000">
 
         <LinearLayout
             android:layout_width="match_parent"
