@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">reCko</string>
-    <string name="black">#000000</string>
-    <string name="green">#008037</string>
-    <string name="white">#FFFFFF</string>
+    <string name="black">#FF000000</string>
+    <string name="green">#FF008037</string>
+    <string name="white">#FFFFFFFF</string>
 </resources>
