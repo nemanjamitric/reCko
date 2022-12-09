@@ -7,7 +7,7 @@
     tools:context=".leaderboard">
 
     <LinearLayout
-        android:layout_width="409dp"
+        android:layout_width="300dp"
         android:layout_height="380dp"
         android:backgroundTint="#000000"
         android:orientation="vertical"
@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25dp"
-            android:text="Leaderboard"
+            android:text="Лествица"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/white"
             android:gravity="center"/>
 
@@ -31,12 +32,22 @@
             android:backgroundTint="#000">
 
             <TableRow
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center">
+                android:gravity="center"
+                android:weightSum="3"
+                >
 
                 <TextView
-                    android:text="1. Tugomir"
+                    android:text="1."
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"/>
+                <TextView
+                    android:text="Tugomir"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textSize="21dp"/>
             </TableRow>
@@ -44,100 +55,181 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="3"
                 android:gravity="center">
 
                 <TextView
-                    android:text="2. Prodan"
+                    android:text="2."
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:textSize="21dp" />
+                    android:textSize="21dp"/>
+                <TextView
+                    android:text="Prodan"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"/>
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="3"
                 android:gravity="center">
 
                 <TextView
-                    android:text="3. Jaglika"
+                    android:text="3."
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:textSize="21dp" />
+                    android:textSize="21dp"/>
+                <TextView
+                    android:text="Jaglika"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"/>
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="3"
                 android:gravity="center">
 
                 <TextView
-                    android:text="4. Stadija"
+                    android:text="4."
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:textSize="21dp" />
+                    android:textSize="21dp"/>
+                <TextView
+                    android:text="Stadija"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"/>
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="3"
                 android:gravity="center">
 
                 <TextView
-                    android:text="5. Dostana"
+                    android:text="5."
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:textSize="21dp" />
+                    android:textSize="21dp"/>
+                <TextView
+                    android:text="Dostana"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"/>
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="3"
                 android:gravity="center">
 
                 <TextView
-                    android:text="6. Vlajko"
+                    android:text="6."
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:textSize="21dp" />
+                    android:textSize="21dp"/>
+                <TextView
+                    android:text="Vlajko"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"/>
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="3"
                 android:gravity="center">
 
                 <TextView
-                    android:text="7. Gorcin"
+                    android:text="7."
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:textSize="21dp" />
+                    android:textSize="21dp"/>
+                <TextView
+                    android:text="Gorcin"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"/>
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="3"
                 android:gravity="center">
 
                 <TextView
-                    android:text="8. Nenad"
+                    android:text="8."
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:textSize="21dp" />
+                    android:textSize="21dp"/>
+                <TextView
+                    android:text="Nenad"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"/>
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="3"
                 android:gravity="center">
 
                 <TextView
-                    android:text="9. Vasilije"
+                    android:text="9."
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:textSize="21dp" />
+                    android:textSize="21dp"/>
+                <TextView
+                    android:text="Vasilije"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"/>
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="3"
                 android:gravity="center">
 
                 <TextView
-                    android:text="10. Davor"
+                    android:text="10."
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:textSize="21dp" />
+                    android:textSize="21dp"/>
+                <TextView
+                    android:text="Davor"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"/>
             </TableRow>
         </TableLayout>
     </LinearLayout>
