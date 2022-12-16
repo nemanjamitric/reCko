@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".LetterActivity">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+<!--        app:layout_constraintStart_toStartOf="parent">-->
+
+        <RelativeLayout
+            android:id="@+id/relativelayout"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/myImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/hexbuttonfull" />
+
+            <TextView
+                android:id="@+id/myImageViewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/myImageView"
+                android:layout_alignTop="@id/myImageView"
+                android:layout_alignRight="@id/myImageView"
+                android:layout_alignBottom="@id/myImageView"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:gravity="center"
+                android:text="R"
+                android:textColor="#000000"
+                android:textSize="40dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
