@@ -1,6 +1,8 @@
 package com.midln.recko;
 
-public class Word {
+import java.io.Serializable;
+
+public class Word implements Serializable {
     public String WordSr;
     public String WordEn;
     public int Level;

@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent switchActivityIntent = new Intent(MainActivity.this, PlayActivity.class);
+                switchActivityIntent.putExtra("wordsGlobal", wordsGlobal);
+
                 startActivity(switchActivityIntent);
             }
         });
@@ -153,7 +155,8 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
             //save data for post
             wordsGlobal = words;
-            new PushWords().execute("https://api.jsonbin.io/v3/b/638b6b14003d6444ce61ea62");
+            //comment out for no posting yet
+           // new PushWords().execute("https://api.jsonbin.io/v3/b/638b6b14003d6444ce61ea62");
         }
     }
 

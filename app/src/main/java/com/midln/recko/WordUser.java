@@ -1,6 +1,8 @@
 package com.midln.recko;
 
-public class WordUser {
+import java.io.Serializable;
+
+public class WordUser implements Serializable {
     public String WordSr;
     public int Time;
     public WordUser(String wordSr, int time){
