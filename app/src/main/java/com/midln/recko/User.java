@@ -1,9 +1,10 @@
 package com.midln.recko;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     public String UserName;
     public int XP;
     public List<WordUser> WordsForUser;

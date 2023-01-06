@@ -28,11 +28,15 @@
             android:paddingTop="10dp"
             android:paddingBottom="23.5dp">
 
-            <ImageButton
-                android:id="@+id/button3"
+            <TextView
+                android:id="@+id/time"
                 android:layout_width="42dp"
                 android:layout_height="40dp"
-                android:background="@drawable/clock" />
+                android:background="@drawable/level"
+                android:gravity="center"
+                android:text="0s"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
 
             <ProgressBar
                 android:id="@+id/progressBar2"
@@ -45,7 +49,7 @@
                 android:background="@color/white" />
 
             <TextView
-                android:id="@+id/button4"
+                android:id="@+id/level"
                 android:layout_width="42dp"
                 android:layout_height="40dp"
                 android:background="@drawable/level"
@@ -78,29 +82,21 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="A woody perennial plant"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textSize="16dp" />
-
         <!--CONTENT-->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/randLetters"
             android:layout_width="match_parent"
             android:layout_height="450dp"
             >
 
             <TextView
-                android:id="@+id/rand"
+                android:id="@+id/rand1"
                 android:layout_width="73dp"
+                android:clickable="true"
                 android:layout_height="67dp"
                 android:background="@drawable/hexbuttonempty"
                 android:gravity="center"
-                android:text="VII"
+                android:text="X"
                 android:textAlignment="center"
                 android:textColor="#00ff00"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -110,13 +106,14 @@
                 app:layout_constraintVertical_bias="0.399" />
 
             <TextView
-                android:id="@+id/rand5"
+                android:id="@+id/rand2"
                 android:layout_width="73dp"
+                android:clickable="true"
                 android:layout_height="67dp"
                 android:layout_marginEnd="4dp"
                 android:background="@drawable/hexbuttonempty"
                 android:gravity="center"
-                android:text="VII"
+                android:text="X"
                 android:textAlignment="center"
                 android:textColor="#00ff00"
                 app:layout_constraintBottom_toTopOf="@+id/rand6"
@@ -125,12 +122,13 @@
                 app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                android:id="@+id/rand1"
+                android:id="@+id/rand3"
                 android:layout_width="73dp"
+                android:clickable="true"
                 android:layout_height="67dp"
                 android:background="@drawable/hexbuttonempty"
                 android:gravity="center"
-                android:text="VII"
+                android:text="X"
                 android:textAlignment="center"
                 android:textColor="#00ff00"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -140,12 +138,13 @@
                 app:layout_constraintVertical_bias="0.224" />
 
             <TextView
-                android:id="@+id/rand2"
+                android:id="@+id/rand4"
                 android:layout_width="73dp"
+                android:clickable="true"
                 android:layout_height="67dp"
                 android:background="@drawable/hexbuttonempty"
                 android:gravity="center"
-                android:text="VII"
+                android:text="X"
                 android:textAlignment="center"
                 android:textColor="#00ff00"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -156,12 +155,13 @@
                 app:layout_constraintVertical_bias="0.349" />
 
             <TextView
-                android:id="@+id/rand3"
+                android:id="@+id/rand5"
                 android:layout_width="73dp"
+                android:clickable="true"
                 android:layout_height="67dp"
                 android:background="@drawable/hexbuttonempty"
                 android:gravity="center"
-                android:text="VII"
+                android:text="X"
                 android:textAlignment="center"
                 android:textColor="#00ff00"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -172,13 +172,14 @@
                 app:layout_constraintVertical_bias="0.524" />
 
             <TextView
-                android:id="@+id/rand4"
+                android:id="@+id/rand6"
                 android:layout_width="73dp"
+                android:clickable="true"
                 android:layout_height="67dp"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/hexbuttonempty"
                 android:gravity="center"
-                android:text="VII"
+                android:text="X"
                 android:textAlignment="center"
                 android:textColor="#00ff00"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -189,11 +190,12 @@
             <TextView
                 android:id="@+id/rand7"
                 android:layout_width="73dp"
+                android:clickable="true"
                 android:layout_height="67dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/hexbuttonempty"
                 android:gravity="center"
-                android:text="VII"
+                android:text="X"
                 android:textAlignment="center"
                 android:textColor="#00ff00"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -202,13 +204,14 @@
                 app:layout_constraintVertical_bias="0.399" />
 
             <TextView
-                android:id="@+id/rand6"
+                android:id="@+id/rand8"
                 android:layout_width="73dp"
+                android:clickable="true"
                 android:layout_height="67dp"
                 android:layout_marginEnd="92dp"
                 android:background="@drawable/hexbuttonempty"
                 android:gravity="center"
-                android:text="VII"
+                android:text="X"
                 android:textAlignment="center"
                 android:textColor="#00ff00"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -217,12 +220,13 @@
                 app:layout_constraintVertical_bias="0.524" />
 
             <TextView
-                android:id="@+id/rand8"
+                android:id="@+id/rand9"
                 android:layout_width="73dp"
+                android:clickable="true"
                 android:layout_height="67dp"
                 android:background="@drawable/hexbuttonempty"
                 android:gravity="center"
-                android:text="VII"
+                android:text="X"
                 android:textAlignment="center"
                 android:textColor="#00ff00"
                 app:layout_constraintBottom_toBottomOf="parent"
