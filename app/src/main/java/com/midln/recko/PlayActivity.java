@@ -1,10 +1,6 @@
 package com.midln.recko;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +15,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
@@ -35,46 +34,33 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.stream.IntStream;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class PlayActivity extends AppCompatActivity {
 
     //save id's for later
-    public  IdsClass idsClass;
-    //global pizza ids
-    int[] idsOfRandLetters = new int[9];
+    public IdsClass idsClass;
     //remember count for current char
     public int counterOfCurrentWordChar = 0;
-
     //current global level
     public int level = 0;
     //current global level progress
     public int levelProgress = 0;
-
     //remember current Word as global
     public Word currentWord;
     //intent globals
     public WordsObject wordsObject;
     public Users usersObject;
     public User userCurrent;
-
-    //global json save variable
-    Users usersObjectNew = new Users();
-
     public TextView levelTv;
     public ProgressBar levelProgressView;
     public TextView timerTv;
     public ProgressDialog pd;
-
     public int timerCounter = 0;
-
-    class Helper extends TimerTask {
-        public void run() {
-            String s = String.valueOf(timerCounter++) + "s";
-          timerTv.setText(s);
-        }
-    }
+    //global pizza ids
+    int[] idsOfRandLetters = new int[9];
+    //global json save variable
+    Users usersObjectNew = new Users();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,17 +101,17 @@ public class PlayActivity extends AppCompatActivity {
         deleteLetters();
 
         // initiate and perform click event on restart word
-        ImageButton restart = (ImageButton)findViewById(R.id.restart);
+        ImageButton restart = (ImageButton) findViewById(R.id.restart);
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //reload word
-                idsClass =  loadWord(wordsObject, level, idsOfRandLetters);
+                idsClass = loadWord(wordsObject, level, idsOfRandLetters);
                 deleteLetters();
             }
         });
         // delete letters from result
-        ImageButton trash = (ImageButton)findViewById(R.id.trash);
+        ImageButton trash = (ImageButton) findViewById(R.id.trash);
         trash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +121,7 @@ public class PlayActivity extends AppCompatActivity {
         });
 
         // delete letters from result
-        ImageButton next = (ImageButton)findViewById(R.id.next);
+        ImageButton next = (ImageButton) findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +130,7 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
-        for (int i =0; i < idsOfRandLetters.length; i++){
+        for (int i = 0; i < idsOfRandLetters.length; i++) {
             TextView tv = (TextView) findViewById(idsOfRandLetters[i]);
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -156,7 +142,7 @@ public class PlayActivity extends AppCompatActivity {
 
     }
 
-    public IdsClass loadWord(WordsObject wordsObject, int level, int[] idsOfRandLetters){
+    public IdsClass loadWord(WordsObject wordsObject, int level, int[] idsOfRandLetters) {
         //reset timer
         timerCounter = 0;
 
@@ -176,17 +162,17 @@ public class PlayActivity extends AppCompatActivity {
         sll.removeAllViews();
 
         //remove previous letters in pizza
-        for (int i = 0; i < idsOfRandLetters.length; i++ ) {
+        for (int i = 0; i < idsOfRandLetters.length; i++) {
             TextView randTv = randLetters.findViewById(idsOfRandLetters[i]);
             randTv.setText("X");
         }
 
         Random rand = new Random(); //instance of random class
         List<Word> wordsAtLevel = new ArrayList<Word>();
-        for(int i = 0; i < wordsObject.Words.size(); i++){
+        for (int i = 0; i < wordsObject.Words.size(); i++) {
             Word wordTemp = wordsObject.Words.get(i);
             boolean passed = false;
-            if(wordTemp.Level == level) {
+            if (wordTemp.Level == level) {
                 //check if user didn't already pass this word
                 for (WordUser wu : userCurrent.WordsForUser) {
                     if (wu.WordSr == wordTemp.WordSr)
@@ -203,7 +189,7 @@ public class PlayActivity extends AppCompatActivity {
         currentWord = gameWord;
 
         int[] ids = new int[gameWord.WordSr.length()];
-        for(int i = 0; i < gameWord.WordSr.length(); i++) {
+        for (int i = 0; i < gameWord.WordSr.length(); i++) {
             View myView = factory.inflate(R.layout.letter_serb, null);
             ids[i] = View.generateViewId();
             myView.setId(ids[i]);
@@ -211,7 +197,7 @@ public class PlayActivity extends AppCompatActivity {
             ViewGroup.LayoutParams layoutParams = rl.getLayoutParams();
             //calculate dps
             final float scale = this.getResources().getDisplayMetrics().density;
-            int pixels = (int) (dpWidth/gameWord.WordSr.length() * scale + 0.5f);
+            int pixels = (int) (dpWidth / gameWord.WordSr.length() * scale + 0.5f);
             layoutParams.width = pixels;
             rl.setLayoutParams(layoutParams);
             TextView tv = myView.findViewById(R.id.textView2);
@@ -226,15 +212,15 @@ public class PlayActivity extends AppCompatActivity {
 
         int[] ids2 = new int[gameWord.WordEn.length()];
 
-        for(int i = 0; i < gameWord.WordEn.length(); i++) {
+        for (int i = 0; i < gameWord.WordEn.length(); i++) {
             //create random value and check if that rand letter has been filled in pizza
             int random = 0;
             boolean contained = true;
-            while(contained && Arrays.stream(checked).anyMatch(k -> k == 0)) {
+            while (contained && Arrays.stream(checked).anyMatch(k -> k == 0)) {
                 random = rand.nextInt(upperbound);
                 contained = false;
                 for (int j = 0; j < checked.length; j++) {
-                    if(checked[j] == random + 1)
+                    if (checked[j] == random + 1)
                         contained = true;
                 }
             }
@@ -251,7 +237,7 @@ public class PlayActivity extends AppCompatActivity {
             ViewGroup.LayoutParams layoutParams = rl.getLayoutParams();
             //calculate dps
             final float scale = this.getResources().getDisplayMetrics().density;
-            int pixels = (int) (dpWidth/gameWord.WordEn.length() * scale + 0.5f);
+            int pixels = (int) (dpWidth / gameWord.WordEn.length() * scale + 0.5f);
             layoutParams.width = pixels;
             rl.setLayoutParams(layoutParams);
             TextView tv = myView.findViewById(R.id.textView);
@@ -265,70 +251,68 @@ public class PlayActivity extends AppCompatActivity {
         return idsClass;
     }
 
-    public void deleteLetters(){
-        for (int i =0; i < idsClass.ids2.length; i++) {
+    public void deleteLetters() {
+        for (int i = 0; i < idsClass.ids2.length; i++) {
             View myView = this.findViewById(idsClass.ids2[i]);
             TextView tv = myView.findViewById(R.id.textView);
             tv.setText("");
             counterOfCurrentWordChar = 0;
         }
-
+//Originalno mesto poziva saveUser() funkcije
 //        saveUser();
     }
 
-    public void addLetter(String letter){
-            View myView = this.findViewById(idsClass.ids2[counterOfCurrentWordChar]);
-            TextView tv = myView.findViewById(R.id.textView);
-            tv.setText(letter);
-            counterOfCurrentWordChar++;
+    public void addLetter(String letter) {
+        View myView = this.findViewById(idsClass.ids2[counterOfCurrentWordChar]);
+        TextView tv = myView.findViewById(R.id.textView);
+        tv.setText(letter);
+        counterOfCurrentWordChar++;
     }
 
-    public void checkWord(){
+    public void checkWord() {
         String wordToCheck = "";
-        for (int i =0; i < idsClass.ids2.length; i++) {
+        for (int i = 0; i < idsClass.ids2.length; i++) {
             View myView = this.findViewById(idsClass.ids2[i]);
             TextView tv = myView.findViewById(R.id.textView);
             wordToCheck = wordToCheck.concat(tv.getText().toString());
         }
-        if(wordToCheck.equals(currentWord.WordEn.toUpperCase(Locale.ROOT))) {
+        if (wordToCheck.equals(currentWord.WordEn.toUpperCase(Locale.ROOT))) {
             //show data in toast
             Toast toast = Toast.makeText(getApplicationContext(), "Tacno!", Toast.LENGTH_SHORT);
             toast.show();
             userCurrent.XP += 20;
-            int time = Integer.parseInt(timerTv.getText().toString().replace('s',' ').trim()); // hardcoded
+            int time = Integer.parseInt(timerTv.getText().toString().replace('s', ' ').trim()); // hardcoded
             userCurrent.WordsForUser.add(new WordUser(currentWord.WordSr, time));
             changeXP();
-            idsClass = loadWord(wordsObject,level,idsOfRandLetters);
+            idsClass = loadWord(wordsObject, level, idsOfRandLetters);
             deleteLetters();
-        }
-        else{
+        } else {
             //show data in toast
             Toast toast = Toast.makeText(getApplicationContext(), "Pogresno.", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
 
-    public void changeXP(){
+    public void changeXP() {
         //set level progress
-        if(userCurrent.XP == 0)
+        if (userCurrent.XP == 0)
             level = 1;
         else
-            level = userCurrent.XP/100;
+            level = userCurrent.XP / 100;
         levelProgress = userCurrent.XP % (level * 100);
         levelTv.setText(String.valueOf(level));
         levelProgressView.setProgress(levelProgress);
     }
 
-    public void saveUser(){
+    public void saveUser() {
         List<User> usersToSave = new ArrayList<>();
         boolean foundUser = false;
-        for(User user:usersObject.Users){
+        for (User user : usersObject.Users) {
             //check if there is an existing user
-            if(user.UserName.equals(userCurrent.UserName)){
+            if (user.UserName.equals(userCurrent.UserName)) {
                 usersToSave.add(userCurrent);
                 foundUser = true;
-            }
-            else{
+            } else {
                 //save the rest back to list
                 usersToSave.add(user);
             }
@@ -340,6 +324,13 @@ public class PlayActivity extends AppCompatActivity {
         usersObjectNew.Users = usersToSave;
         //save new users to json bin
         new PushUser().execute("https://api.jsonbin.io/v3/b/638b6c487966e84526d32e7e");
+    }
+
+    class Helper extends TimerTask {
+        public void run() {
+            String s = String.valueOf(timerCounter++) + "s";
+            timerTv.setText(s);
+        }
     }
 
     private class PushUser extends AsyncTask<String, String, String> {
@@ -360,21 +351,21 @@ public class PlayActivity extends AppCompatActivity {
             try {
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestProperty ("X-Master-Key", "$2b$10$BPLdapvarWs/vuRwoTuoqOe0X6kGVmDMI/y9zyRDY7sRM9C1LSt/6");
-                connection.setRequestProperty ("X-Access-Key", "$2b$10$V6CKmezfWtmInV8l6MWvK.RZYAyQbNA6vKJpD2pbLDimvVk8IkBpi");
+                connection.setRequestProperty("X-Master-Key", "$2b$10$BPLdapvarWs/vuRwoTuoqOe0X6kGVmDMI/y9zyRDY7sRM9C1LSt/6");
+                connection.setRequestProperty("X-Access-Key", "$2b$10$V6CKmezfWtmInV8l6MWvK.RZYAyQbNA6vKJpD2pbLDimvVk8IkBpi");
                 connection.setRequestMethod("PUT");
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setDoOutput(true);
 
                 //push to json bin
-                OutputStreamWriter wr = new OutputStreamWriter (connection.getOutputStream());
+                OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
                 wr.write(new Gson().toJson(usersObjectNew));
                 wr.flush();
                 wr.close();
 
                 //read response
-                return  Integer.toString(connection.getResponseCode());
+                return Integer.toString(connection.getResponseCode());
 
 
             } catch (MalformedURLException e) {
@@ -398,7 +389,7 @@ public class PlayActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            if (pd.isShowing()){
+            if (pd.isShowing()) {
                 pd.dismiss();
             }
             super.onPostExecute(result);
