@@ -1,7 +1,5 @@
 package com.midln.recko;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,25 +9,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.gson.Gson;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,23 +41,29 @@ public class MainActivity extends AppCompatActivity {
         pocniBtn = findViewById(R.id.pocniBtn);
         tv = this.findViewById(R.id.image_view);
 
+
         pocniBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 String userName = tv.getText().toString();
-                User userGlobal = new User(userName,0);
-                for(User user: usersGlobal.Users) {
-                    if(user.UserName.equals(userName))
-                    userGlobal = user;
+                User userGlobal = new User(userName, 0);
+                for (User user : usersGlobal.Users) {
+                    if (user.UserName.equals(userName))
+                        userGlobal = user;
                 }
 
-                Intent switchActivityIntent = new Intent(MainActivity.this, PlayActivity.class);
-                switchActivityIntent.putExtra("wordsGlobal", wordsGlobal);
-                switchActivityIntent.putExtra("usersGlobal", usersGlobal);
-                switchActivityIntent.putExtra("userGlobal", userGlobal);
+                if (tv.getText().toString().equals("")) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Molimo Vas unesite vaše ime", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    Intent switchActivityIntent = new Intent(MainActivity.this, PlayActivity.class);
+                    switchActivityIntent.putExtra("wordsGlobal", wordsGlobal);
+                    switchActivityIntent.putExtra("usersGlobal", usersGlobal);
+                    switchActivityIntent.putExtra("userGlobal", userGlobal);
 
-                startActivity(switchActivityIntent);
+                    startActivity(switchActivityIntent);
+                }
             }
         });
 
@@ -92,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestProperty ("X-Master-Key", "$2b$10$BPLdapvarWs/vuRwoTuoqOe0X6kGVmDMI/y9zyRDY7sRM9C1LSt/6");
-                connection.setRequestProperty ("X-Access-Key", "$2b$10$V6CKmezfWtmInV8l6MWvK.RZYAyQbNA6vKJpD2pbLDimvVk8IkBpi");
+                connection.setRequestProperty("X-Master-Key", "$2b$10$BPLdapvarWs/vuRwoTuoqOe0X6kGVmDMI/y9zyRDY7sRM9C1LSt/6");
+                connection.setRequestProperty("X-Access-Key", "$2b$10$V6CKmezfWtmInV8l6MWvK.RZYAyQbNA6vKJpD2pbLDimvVk8IkBpi");
                 connection.connect();
 
                 InputStream stream = connection.getInputStream();
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 String line = "";
 
                 while ((line = reader.readLine()) != null) {
-                    buffer.append(line+"\n");
+                    buffer.append(line + "\n");
                     Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
 
                 }
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            if (pd.isShowing()){
+            if (pd.isShowing()) {
                 pd.dismiss();
             }
             Users users = new Users();
@@ -144,8 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject record = jObject.getJSONObject("record");
 
                 JSONArray jArray = record.getJSONArray("Users");
-                for (int i=0; i < jArray.length(); i++)
-                {
+                for (int i = 0; i < jArray.length(); i++) {
                     try {
                         // Pulling items from the array
                         String userName = jArray.getJSONObject(i).getString("UserName");
@@ -154,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
                         User user = new User(userName, xp);
 
-                        for (int j = 0; j < jArray2.length(); j++){
+                        for (int j = 0; j < jArray2.length(); j++) {
                             String wordSr = jArray2.getJSONObject(j).getString("WordSr");
                             int time = jArray2.getJSONObject(j).getInt("Time");
                             user.WordsForUser.add(new WordUser(wordSr, time));
@@ -199,8 +197,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestProperty ("X-Master-Key", "$2b$10$BPLdapvarWs/vuRwoTuoqOe0X6kGVmDMI/y9zyRDY7sRM9C1LSt/6");
-                connection.setRequestProperty ("X-Access-Key", "$2b$10$V6CKmezfWtmInV8l6MWvK.RZYAyQbNA6vKJpD2pbLDimvVk8IkBpi");
+                connection.setRequestProperty("X-Master-Key", "$2b$10$BPLdapvarWs/vuRwoTuoqOe0X6kGVmDMI/y9zyRDY7sRM9C1LSt/6");
+                connection.setRequestProperty("X-Access-Key", "$2b$10$V6CKmezfWtmInV8l6MWvK.RZYAyQbNA6vKJpD2pbLDimvVk8IkBpi");
                 connection.connect();
 
                 InputStream stream = connection.getInputStream();
@@ -211,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 String line = "";
 
                 while ((line = reader.readLine()) != null) {
-                    buffer.append(line+"\n");
+                    buffer.append(line + "\n");
                     Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
 
                 }
@@ -241,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            if (pd.isShowing()){
+            if (pd.isShowing()) {
                 pd.dismiss();
             }
             WordsObject words = new WordsObject();
@@ -252,15 +250,14 @@ public class MainActivity extends AppCompatActivity {
                 words.Version = record.getInt("Version");
 
                 JSONArray jArray = record.getJSONArray("Words");
-                for (int i=0; i < jArray.length(); i++)
-                {
+                for (int i = 0; i < jArray.length(); i++) {
                     try {
                         // Pulling items from the array
                         String wordSr = jArray.getJSONObject(i).getString("WordSr");
                         String wordEn = jArray.getJSONObject(i).getString("WordEn");
                         int level = jArray.getJSONObject(i).getInt("Level");
                         //add to object
-                        words.Words.add(new Word(wordSr,wordEn,level));
+                        words.Words.add(new Word(wordSr, wordEn, level));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -281,7 +278,6 @@ public class MainActivity extends AppCompatActivity {
             new GetUsers().execute("https://api.jsonbin.io/v3/b/638b6c487966e84526d32e7e/");
         }
     }
-
 
     //end of json functions
 }
