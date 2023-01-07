@@ -108,7 +108,8 @@ public class PlayActivity extends AppCompatActivity {
         timerTv = this.findViewById(R.id.time);
 
         changeXP();
-
+        //Save user pomeren ovde iz funkcije deleteLetters
+        saveUser();
         //start initial game
         idsClass = loadWord(wordsObject, level, idsOfRandLetters);
         deleteLetters();
@@ -272,7 +273,7 @@ public class PlayActivity extends AppCompatActivity {
             counterOfCurrentWordChar = 0;
         }
 
-        saveUser();
+//        saveUser();
     }
 
     public void addLetter(String letter){
