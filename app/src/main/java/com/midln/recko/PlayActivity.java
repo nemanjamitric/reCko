@@ -3,10 +3,13 @@ package com.midln.recko;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,9 +59,13 @@ public class PlayActivity extends AppCompatActivity {
     public Users usersObject;
     public User userCurrent;
 
+    //global json save variable
+    Users usersObjectNew = new Users();
+
     public TextView levelTv;
     public ProgressBar levelProgressView;
     public TextView timerTv;
+    public ProgressDialog pd;
 
     public int timerCounter = 0;
 
@@ -256,6 +271,8 @@ public class PlayActivity extends AppCompatActivity {
             tv.setText("");
             counterOfCurrentWordChar = 0;
         }
+
+        saveUser();
     }
 
     public void addLetter(String letter){
@@ -292,9 +309,100 @@ public class PlayActivity extends AppCompatActivity {
 
     public void changeXP(){
         //set level progress
-        level = userCurrent.XP/100;
+        if(userCurrent.XP == 0)
+            level = 1;
+        else
+            level = userCurrent.XP/100;
         levelProgress = userCurrent.XP % (level * 100);
         levelTv.setText(String.valueOf(level));
         levelProgressView.setProgress(levelProgress);
     }
+
+    public void saveUser(){
+        List<User> usersToSave = new ArrayList<>();
+        boolean foundUser = false;
+        for(User user:usersObject.Users){
+            //check if there is an existing user
+            if(user.UserName.equals(userCurrent.UserName)){
+                usersToSave.add(userCurrent);
+                foundUser = true;
+            }
+            else{
+                //save the rest back to list
+                usersToSave.add(user);
+            }
+        }
+        //save new user
+        if (!foundUser)
+            usersToSave.add(userCurrent);
+
+        usersObjectNew.Users = usersToSave;
+        //save new users to json bin
+        new PushUser().execute("https://api.jsonbin.io/v3/b/638b6c487966e84526d32e7e");
+    }
+
+    private class PushUser extends AsyncTask<String, String, String> {
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd = new ProgressDialog(PlayActivity.this);
+            pd.setMessage("Molimo sačekajte");
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        protected String doInBackground(String... params) {
+
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty ("X-Master-Key", "$2b$10$BPLdapvarWs/vuRwoTuoqOe0X6kGVmDMI/y9zyRDY7sRM9C1LSt/6");
+                connection.setRequestProperty ("X-Access-Key", "$2b$10$V6CKmezfWtmInV8l6MWvK.RZYAyQbNA6vKJpD2pbLDimvVk8IkBpi");
+                connection.setRequestMethod("PUT");
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Accept", "application/json");
+                connection.setDoOutput(true);
+
+                //push to json bin
+                OutputStreamWriter wr = new OutputStreamWriter (connection.getOutputStream());
+                wr.write(new Gson().toJson(usersObjectNew));
+                wr.flush();
+                wr.close();
+
+                //read response
+                return  Integer.toString(connection.getResponseCode());
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (pd.isShowing()){
+                pd.dismiss();
+            }
+            super.onPostExecute(result);
+            Log.e("TAG", result); // this is expecting a response code to be sent from your server upon receiving the POST data
+        }
+    }
+
 }

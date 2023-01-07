@@ -143,20 +143,20 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject jObject = new JSONObject(result);
                 JSONObject record = jObject.getJSONObject("record");
 
-                JSONArray jArray = record.getJSONArray("users");
+                JSONArray jArray = record.getJSONArray("Users");
                 for (int i=0; i < jArray.length(); i++)
                 {
                     try {
                         // Pulling items from the array
-                        String userName = jArray.getJSONObject(i).getString("user_name");
-                        int xp = jArray.getJSONObject(i).getInt("xp");
-                        JSONArray jArray2 = jArray.getJSONObject(i).getJSONArray("words");
+                        String userName = jArray.getJSONObject(i).getString("UserName");
+                        int xp = jArray.getJSONObject(i).getInt("XP");
+                        JSONArray jArray2 = jArray.getJSONObject(i).getJSONArray("WordsForUser");
 
                         User user = new User(userName, xp);
 
                         for (int j = 0; j < jArray2.length(); j++){
-                            String wordSr = jArray2.getJSONObject(j).getString("word_sr");
-                            int time = jArray2.getJSONObject(j).getInt("time");
+                            String wordSr = jArray2.getJSONObject(j).getString("WordSr");
+                            int time = jArray2.getJSONObject(j).getInt("Time");
                             user.WordsForUser.add(new WordUser(wordSr, time));
                         }
 
@@ -279,80 +279,9 @@ public class MainActivity extends AppCompatActivity {
 
             //get users before start of the game and check
             new GetUsers().execute("https://api.jsonbin.io/v3/b/638b6c487966e84526d32e7e/");
-
-            //comment out for no posting yet
-           // new PushWords().execute("https://api.jsonbin.io/v3/b/638b6b14003d6444ce61ea62");
         }
     }
 
-    private class PushWords extends AsyncTask<String, String, String> {
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pd = new ProgressDialog(MainActivity.this);
-            pd.setMessage("Molimo sačekajte");
-            pd.setCancelable(false);
-            pd.show();
-        }
-
-        protected String doInBackground(String... params) {
-
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
-
-            try {
-                URL url = new URL(params[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestProperty ("X-Master-Key", "$2b$10$BPLdapvarWs/vuRwoTuoqOe0X6kGVmDMI/y9zyRDY7sRM9C1LSt/6");
-                connection.setRequestProperty ("X-Access-Key", "$2b$10$V6CKmezfWtmInV8l6MWvK.RZYAyQbNA6vKJpD2pbLDimvVk8IkBpi");
-                connection.setRequestMethod("PUT");
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setRequestProperty("Accept", "application/json");
-                connection.setDoOutput(true);
-
-                //change words to add more
-                wordsGlobal.Version += 1;
-                wordsGlobal.Words.add(new Word("Cao","Hello", 1));
-
-
-                //push to json bin
-                OutputStreamWriter wr = new OutputStreamWriter (connection.getOutputStream());
-                wr.write(new Gson().toJson(wordsGlobal));
-                wr.flush();
-                wr.close();
-
-                //read response
-                return  Integer.toString(connection.getResponseCode());
-
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (pd.isShowing()){
-                pd.dismiss();
-            }
-            super.onPostExecute(result);
-            Log.e("TAG", result); // this is expecting a response code to be sent from your server upon receiving the POST data
-        }
-    }
 
     //end of json functions
 }
