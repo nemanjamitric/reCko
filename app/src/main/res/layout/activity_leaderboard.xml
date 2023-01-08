@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25dp"
-            android:text="Лествица"
+            android:text="Lestvica"
             android:layout_marginBottom="10dp"
             android:textColor="@color/white"
             android:gravity="center"/>
@@ -46,14 +46,14 @@
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView1"
-                    android:text="Tugomir"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView1points"
-                    android:text="1111"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
@@ -74,14 +74,14 @@
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView2"
-                    android:text="Prodan"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView2points"
-                    android:text="1009"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
@@ -102,14 +102,14 @@
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView3"
-                    android:text="Jaglika"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView3points"
-                    android:text="1008"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
@@ -130,14 +130,14 @@
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView4"
-                    android:text="Stadija"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView4points"
-                    android:text="1007"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
@@ -158,14 +158,14 @@
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView5"
-                    android:text="Dostana"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView5points"
-                    android:text="1006"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
@@ -186,14 +186,14 @@
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView6"
-                    android:text="Vlajko"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView6points"
-                    android:text="1005"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
@@ -214,14 +214,14 @@
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView7"
-                    android:text="1004"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView7points"
-                    android:text="1003"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
@@ -242,14 +242,14 @@
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView8"
-                    android:text="Nenad"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textSize="21dp"/>
                 <TextView
                 android:id="@+id/textView8points"
-                android:text="1002"
+                android:text=""
                 android:layout_width="0dp"
                 android:layout_weight="2"
                 android:textColor="@color/white"
@@ -270,14 +270,14 @@
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView9"
-                    android:text="Vasilije"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView9points"
-                    android:text="1001"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
@@ -298,14 +298,14 @@
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView10"
-                    android:text="Davor"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textSize="21dp"/>
                 <TextView
                     android:id="@+id/textView10points"
-                    android:text="1000"
+                    android:text=""
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:textColor="@color/white"

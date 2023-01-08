@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     Users usersGlobal = new Users();
     TextView tv;
     Button pocniBtn;
+    TextView textView1,textView2,textView3,textView4,textView5,textView6,textView7,textView8,textView9,textView10;
+    TextView textView1points,textView2points,textView3points,textView4points,textView5points,textView6points,textView7points,textView8points,textView9points,textView10points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,26 @@ public class MainActivity extends AppCompatActivity {
 
         pocniBtn = findViewById(R.id.pocniBtn);
         tv = this.findViewById(R.id.image_view);
-
+        textView1 = this.findViewById(R.id.textView1);
+        textView1points = this.findViewById(R.id.textView1points);
+        textView2 = this.findViewById(R.id.textView2);
+        textView2points = this.findViewById(R.id.textView2points);
+        textView3 = this.findViewById(R.id.textView3);
+        textView3points = this.findViewById(R.id.textView3points);
+        textView4 = this.findViewById(R.id.textView4);
+        textView4points = this.findViewById(R.id.textView4points);
+        textView5 = this.findViewById(R.id.textView5);
+        textView5points = this.findViewById(R.id.textView5points);
+        textView6 = this.findViewById(R.id.textView6);
+        textView6points = this.findViewById(R.id.textView6points);
+        textView7 = this.findViewById(R.id.textView7);
+        textView7points = this.findViewById(R.id.textView7points);
+        textView8 = this.findViewById(R.id.textView8);
+        textView8points = this.findViewById(R.id.textView8points);
+        textView9 = this.findViewById(R.id.textView9);
+        textView9points = this.findViewById(R.id.textView9points);
+        textView10 = this.findViewById(R.id.textView10);
+        textView10points = this.findViewById(R.id.textView10points);
 
         pocniBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line + "\n");
-                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
+//                    Log.d("Users: ", "> " + line);   //here u ll get whole response...... :-)
 
                 }
 
@@ -170,11 +191,83 @@ public class MainActivity extends AppCompatActivity {
             }
 
 //            //show data in toast
-//            Toast toast = Toast.makeText(getApplicationContext(), words.Words.get(0).WordEn, Toast.LENGTH_LONG);
+//            Toast toast = Toast.makeText(getApplicationContext(), (CharSequence) users.Users.get(0), Toast.LENGTH_LONG);
 //            toast.show();
 
             //save data for post
             usersGlobal = users;
+
+
+            Users orderedByXPUsers = users;
+
+            boolean sorted = false;
+            User temp;
+            while(!sorted) {
+                sorted = true;
+                for (int i = 0; i < orderedByXPUsers.Users.size() - 1; i++) {
+                    if (orderedByXPUsers.Users.get(i).XP < orderedByXPUsers.Users.get(i+1).XP) {
+                        temp = orderedByXPUsers.Users.get(i);
+                        orderedByXPUsers.Users.set(i, orderedByXPUsers.Users.get(i+1));
+                        orderedByXPUsers.Users.set(i + 1, temp);
+                        sorted = false;
+                    }
+                }
+            }
+            for (int i = 0; i < orderedByXPUsers.Users.size(); i++) {
+                User x = orderedByXPUsers.Users.get(i);
+                switch (i){
+                    case (0):{
+                        textView1.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView1points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (1):{
+                        textView2.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView2points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (2):{
+                        textView3.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView3points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (3):{
+                        textView4.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView4points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (4):{
+                        textView5.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView5points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (5):{
+                        textView6.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView6points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (6):{
+                        textView7.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView7points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (7):{
+                        textView8.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView8points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (8):{
+                        textView9.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView9points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (9):{
+                        textView10.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView10points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -210,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
 
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line + "\n");
-                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
+//                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
 
                 }
 
