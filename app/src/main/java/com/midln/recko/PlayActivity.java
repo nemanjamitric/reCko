@@ -208,6 +208,9 @@ public class PlayActivity extends AppCompatActivity {
 
         rand = new Random();
         upperbound = gameWord.WordEn.length();
+        if(upperbound > 9)
+            upperbound = 9;
+
         int[] checked = new int[gameWord.WordEn.length()];
 
         int[] ids2 = new int[gameWord.WordEn.length()];
@@ -266,6 +269,7 @@ public class PlayActivity extends AppCompatActivity {
         View myView = this.findViewById(idsClass.ids2[counterOfCurrentWordChar]);
         TextView tv = myView.findViewById(R.id.textView);
         tv.setText(letter);
+        if(counterOfCurrentWordChar != currentWord.WordEn.length() - 1)
         counterOfCurrentWordChar++;
     }
 
