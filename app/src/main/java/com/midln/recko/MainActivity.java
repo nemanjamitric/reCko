@@ -1,7 +1,10 @@
 package com.midln.recko;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +20,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -88,9 +93,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //json call
-        new GetWords().execute("https://api.jsonbin.io/v3/b/638b6b14003d6444ce61ea62/");
-        //end of json call
+        //check if we are connected to internet
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        boolean connected = (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED);
+
+        if(connected) {
+            //json call
+            new GetWords().execute("https://api.jsonbin.io/v3/b/638b6b14003d6444ce61ea62/");
+            //end of json call
+        }
+        else {
+            //get offline version
+         readFromFile("jsonWords.txt");
+         readFromFile("jsonUsers.txt");
+        }
     }
 
     //json functions
@@ -125,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line + "\n");
-//                    Log.d("Users: ", "> " + line);   //here u ll get whole response...... :-)
+                   Log.d("Users: ", "> " + line);   //here u ll get whole response...... :-)
 
                 }
 
@@ -157,6 +175,9 @@ public class MainActivity extends AppCompatActivity {
             if (pd.isShowing()) {
                 pd.dismiss();
             }
+
+            writeToFile(result,"jsonUsers.txt");
+
             Users users = new Users();
             //convert retrieved json file to object
             try {
@@ -197,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
             //save data for post
             usersGlobal = users;
 
+            //leader board logic
 
             Users orderedByXPUsers = users;
 
@@ -335,6 +357,10 @@ public class MainActivity extends AppCompatActivity {
             if (pd.isShowing()) {
                 pd.dismiss();
             }
+
+            //update offline file
+            writeToFile(result, "jsonWords.txt");
+
             WordsObject words = new WordsObject();
             //convert retrieved json file to object
             try {
@@ -373,4 +399,182 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //end of json functions
+
+    private void writeToFile(String data, String name) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(name, Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    private void readFromFile(String name) {
+
+        String result = "";
+
+        try {
+            InputStream inputStream = getApplicationContext().openFileInput(name);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                result = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+        if(name == "jsonWords.txt"){
+
+            WordsObject words = new WordsObject();
+            //convert retrieved json file to object
+            try {
+            JSONObject jObject = new JSONObject(result);
+            JSONObject record = jObject.getJSONObject("record");
+            words.Version = record.getInt("Version");
+
+            JSONArray jArray = record.getJSONArray("Words");
+            for (int i = 0; i < jArray.length(); i++) {
+                try {
+                    // Pulling items from the array
+                    String wordSr = jArray.getJSONObject(i).getString("WordSr");
+                    String wordEn = jArray.getJSONObject(i).getString("WordEn");
+                    int level = jArray.getJSONObject(i).getInt("Level");
+                    //add to object
+                    words.Words.add(new Word(wordSr, wordEn, level));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //save data for post
+        wordsGlobal = words;
+        }
+        else if(name == "jsonUsers.txt"){
+
+            Users users = new Users();
+            //convert retrieved json file to object
+            try {
+                JSONObject jObject = new JSONObject(result);
+                JSONObject record = jObject.getJSONObject("record");
+
+                JSONArray jArray = record.getJSONArray("Users");
+                for (int i = 0; i < jArray.length(); i++) {
+                    try {
+                        // Pulling items from the array
+                        String userName = jArray.getJSONObject(i).getString("UserName");
+                        int xp = jArray.getJSONObject(i).getInt("XP");
+                        JSONArray jArray2 = jArray.getJSONObject(i).getJSONArray("WordsForUser");
+
+                        User user = new User(userName, xp);
+
+                        for (int j = 0; j < jArray2.length(); j++) {
+                            String wordSr = jArray2.getJSONObject(j).getString("WordSr");
+                            int time = jArray2.getJSONObject(j).getInt("Time");
+                            user.WordsForUser.add(new WordUser(wordSr, time));
+                        }
+
+                        users.Users.add(user);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //save data for post
+            usersGlobal = users;
+
+            //leader board logic
+            Users orderedByXPUsers = users;
+
+            boolean sorted = false;
+            User temp;
+            while(!sorted) {
+                sorted = true;
+                for (int i = 0; i < orderedByXPUsers.Users.size() - 1; i++) {
+                    if (orderedByXPUsers.Users.get(i).XP < orderedByXPUsers.Users.get(i+1).XP) {
+                        temp = orderedByXPUsers.Users.get(i);
+                        orderedByXPUsers.Users.set(i, orderedByXPUsers.Users.get(i+1));
+                        orderedByXPUsers.Users.set(i + 1, temp);
+                        sorted = false;
+                    }
+                }
+            }
+            for (int i = 0; i < orderedByXPUsers.Users.size(); i++) {
+                User x = orderedByXPUsers.Users.get(i);
+                switch (i){
+                    case (0):{
+                        textView1.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView1points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (1):{
+                        textView2.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView2points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (2):{
+                        textView3.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView3points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (3):{
+                        textView4.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView4points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (4):{
+                        textView5.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView5points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (5):{
+                        textView6.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView6points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (6):{
+                        textView7.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView7points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (7):{
+                        textView8.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView8points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (8):{
+                        textView9.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView9points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                    case (9):{
+                        textView10.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
+                        textView10points.setText(String.valueOf(x.XP));
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }

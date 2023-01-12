@@ -302,8 +302,8 @@ public class PlayActivity extends AppCompatActivity {
         if (userCurrent.XP == 0)
             level = 1;
         else
-            level = userCurrent.XP / 100;
-        levelProgress = userCurrent.XP % (level * 100);
+            level = userCurrent.XP / 100 + 1;
+        levelProgress = (userCurrent.XP + 100) % ((level) * 100);
         levelTv.setText(String.valueOf(level));
         levelProgressView.setProgress(levelProgress);
     }
