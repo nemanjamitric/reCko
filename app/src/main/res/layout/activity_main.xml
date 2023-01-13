@@ -22,15 +22,15 @@
             android:layout_height="100dp"
             android:orientation="horizontal"
             android:layout_gravity="center"
-            android:paddingTop="20dp"
+            android:paddingTop="-10dp"
             >
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_height="120dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/reckologo" />
+                app:srcCompat="@drawable/reckologonew" />
         </LinearLayout>
 
         <LinearLayout
