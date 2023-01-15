@@ -1,11 +1,15 @@
 package com.midln.recko;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +46,8 @@ public class PlayActivity extends AppCompatActivity {
     public IdsClass idsClass;
     //remember count for current char
     public int counterOfCurrentWordChar = 0;
+    //check if we move counter of current word multiple times
+    public boolean multipleDelete = false;
     //current global level
     public int level = 0;
     //current global level progress
@@ -94,8 +100,6 @@ public class PlayActivity extends AppCompatActivity {
         timerTv = this.findViewById(R.id.time);
 
         changeXP();
-        //Save user pomeren ovde iz funkcije deleteLetters
-        saveUser();
         //start initial game
         idsClass = loadWord(wordsObject, level, idsOfRandLetters);
         deleteLetters();
@@ -117,6 +121,15 @@ public class PlayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //reload word
                 deleteLetters();
+            }
+        });
+        // delete letters from result
+        LinearLayout secondRow = (LinearLayout) findViewById(R.id.secondRow);
+        secondRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //delete one letter
+                deleteOneLetter();
             }
         });
 
@@ -157,7 +170,7 @@ public class PlayActivity extends AppCompatActivity {
         LinearLayout sll = (LinearLayout) this.findViewById(R.id.secondRow);
         View randLetters = this.findViewById(R.id.randLetters);
 
-        //remove previous reviews
+        //remove previous views
         mll.removeAllViews();
         sll.removeAllViews();
 
@@ -183,6 +196,11 @@ public class PlayActivity extends AppCompatActivity {
             }
         }
         int upperbound = wordsAtLevel.size();
+        if(upperbound == 0){
+            showScore(false);
+            return null;
+        }
+        multipleDelete = false;
         //generate random values from 0-24
         Word gameWord = wordsAtLevel.get(rand.nextInt(upperbound));
         //save word as current global
@@ -255,14 +273,30 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void deleteLetters() {
-        for (int i = 0; i < idsClass.ids2.length; i++) {
-            View myView = this.findViewById(idsClass.ids2[i]);
+        if(idsClass != null) {
+            multipleDelete = false;
+            for (int i = 0; i < idsClass.ids2.length; i++) {
+                View myView = this.findViewById(idsClass.ids2[i]);
+                TextView tv = myView.findViewById(R.id.textView);
+                tv.setText("");
+                counterOfCurrentWordChar = 0;
+            }
+        }
+    }
+    public void deleteOneLetter() {
+        if(idsClass != null) {
+            View myView = this.findViewById(idsClass.ids2[multipleDelete && counterOfCurrentWordChar != 0 ? (counterOfCurrentWordChar - 1) : counterOfCurrentWordChar]);
             TextView tv = myView.findViewById(R.id.textView);
             tv.setText("");
-            counterOfCurrentWordChar = 0;
+            if(multipleDelete) {
+                if (counterOfCurrentWordChar > 0)
+                    counterOfCurrentWordChar--;
+                else
+                    multipleDelete = true;
+            }
+            else
+                multipleDelete = true;
         }
-//Originalno mesto poziva saveUser() funkcije
-//        saveUser();
     }
 
     public void addLetter(String letter) {
@@ -270,7 +304,7 @@ public class PlayActivity extends AppCompatActivity {
         TextView tv = myView.findViewById(R.id.textView);
         tv.setText(letter);
         if(counterOfCurrentWordChar != currentWord.WordEn.length() - 1)
-        counterOfCurrentWordChar++;
+            counterOfCurrentWordChar++;
     }
 
     public void checkWord() {
@@ -288,6 +322,7 @@ public class PlayActivity extends AppCompatActivity {
             int time = Integer.parseInt(timerTv.getText().toString().replace('s', ' ').trim()); // hardcoded
             userCurrent.WordsForUser.add(new WordUser(currentWord.WordSr, time));
             changeXP();
+            IdsClass idsTemp = new IdsClass();
             idsClass = loadWord(wordsObject, level, idsOfRandLetters);
             deleteLetters();
         } else {
@@ -401,4 +436,54 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
+    private void showScore(boolean isBack) {
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+        int fullTime = 0;
+        for(WordUser word : userCurrent.WordsForUser){
+            fullTime += word.Time;
+        }
+        dialog.setMessage("Ukupno ste pogodili " + userCurrent.WordsForUser.size() + " reči" + System.lineSeparator() + "Za vreme od " + String.valueOf(fullTime) + "s" + System.lineSeparator() + "I konačan skor je " + (100/(fullTime + 1) * userCurrent.WordsForUser.size()) + "!");
+        dialog.setTitle(isBack ? "Trenutni poeni Vaši!" : "Čestitamo prešli ste igricu!");
+
+        dialog.setPositiveButton(isBack ? "Izađi iz igre." : "Super!",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        //with saving to leaderboard
+                        saveUser();
+                        //send to original page after updated score
+                        Intent switchActivityIntent = new Intent(PlayActivity.this, MainActivity.class);
+                        startActivity(switchActivityIntent);
+                    }
+                });
+        dialog.setNeutralButton(isBack ? "Izađi iz igre, ali ne pokazuj na lestvici." : "Super! Ne pokazuj na lestvici.",
+                new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        //without saving to leaderboard
+                        //send to original page after updated score
+                        Intent switchActivityIntent = new Intent(PlayActivity.this, MainActivity.class);
+                        startActivity(switchActivityIntent);
+                    }
+                });
+        if(isBack){
+            dialog.setNegativeButton("Ostani u igri.",new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(),"Ostajem u igri, idemo!",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        AlertDialog alertDialog=dialog.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            showScore(true);
+        }
+        return false;
+    }
 }

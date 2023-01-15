@@ -227,7 +227,15 @@ public class MainActivity extends AppCompatActivity {
             while(!sorted) {
                 sorted = true;
                 for (int i = 0; i < orderedByXPUsers.Users.size() - 1; i++) {
-                    if (orderedByXPUsers.Users.get(i).XP < orderedByXPUsers.Users.get(i+1).XP) {
+                    int fullTime = 0;
+                    for(WordUser word : orderedByXPUsers.Users.get(i).WordsForUser){
+                        fullTime += word.Time;
+                    }
+                    int fullTime2 = 0;
+                    for(WordUser word : orderedByXPUsers.Users.get(i + 1).WordsForUser){
+                        fullTime2 += word.Time;
+                    }
+                    if ((orderedByXPUsers.Users.get(i).WordsForUser.size() * (100/(fullTime + 1))) < (orderedByXPUsers.Users.get(i+1).WordsForUser.size() * (100/(fullTime2 + 1)))) {
                         temp = orderedByXPUsers.Users.get(i);
                         orderedByXPUsers.Users.set(i, orderedByXPUsers.Users.get(i+1));
                         orderedByXPUsers.Users.set(i + 1, temp);
@@ -237,55 +245,60 @@ public class MainActivity extends AppCompatActivity {
             }
             for (int i = 0; i < orderedByXPUsers.Users.size(); i++) {
                 User x = orderedByXPUsers.Users.get(i);
+                int fullTime = 0;
+                for(WordUser word : orderedByXPUsers.Users.get(i).WordsForUser){
+                    fullTime += word.Time;
+                }
+                int score = x.WordsForUser.size() * (100/(fullTime + 1));
                 switch (i){
                     case (0):{
                         textView1.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView1points.setText(String.valueOf(x.XP));
+                        textView1points.setText(String.valueOf(score));
                         break;
                     }
                     case (1):{
                         textView2.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView2points.setText(String.valueOf(x.XP));
+                        textView2points.setText(String.valueOf(score));
                         break;
                     }
                     case (2):{
                         textView3.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView3points.setText(String.valueOf(x.XP));
+                        textView3points.setText(String.valueOf(score));
                         break;
                     }
                     case (3):{
                         textView4.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView4points.setText(String.valueOf(x.XP));
+                        textView4points.setText(String.valueOf(score));
                         break;
                     }
                     case (4):{
                         textView5.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView5points.setText(String.valueOf(x.XP));
+                        textView5points.setText(String.valueOf(score));
                         break;
                     }
                     case (5):{
                         textView6.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView6points.setText(String.valueOf(x.XP));
+                        textView6points.setText(String.valueOf(score));
                         break;
                     }
                     case (6):{
                         textView7.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView7points.setText(String.valueOf(x.XP));
+                        textView7points.setText(String.valueOf(score));
                         break;
                     }
                     case (7):{
                         textView8.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView8points.setText(String.valueOf(x.XP));
+                        textView8points.setText(String.valueOf(score));
                         break;
                     }
                     case (8):{
                         textView9.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView9points.setText(String.valueOf(x.XP));
+                        textView9points.setText(String.valueOf(score));
                         break;
                     }
                     case (9):{
                         textView10.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView10points.setText(String.valueOf(x.XP));
+                        textView10points.setText(String.valueOf(score));
                         break;
                     }
                 }
@@ -512,7 +525,15 @@ public class MainActivity extends AppCompatActivity {
             while(!sorted) {
                 sorted = true;
                 for (int i = 0; i < orderedByXPUsers.Users.size() - 1; i++) {
-                    if (orderedByXPUsers.Users.get(i).XP < orderedByXPUsers.Users.get(i+1).XP) {
+                    int fullTime = 0;
+                    for(WordUser word : orderedByXPUsers.Users.get(i).WordsForUser){
+                        fullTime += word.Time;
+                    }
+                    int fullTime2 = 0;
+                    for(WordUser word : orderedByXPUsers.Users.get(i + 1).WordsForUser){
+                        fullTime2 += word.Time;
+                    }
+                    if ((orderedByXPUsers.Users.get(i).WordsForUser.size() * (100/(fullTime + 1))) < (orderedByXPUsers.Users.get(i+1).WordsForUser.size() * (100/(fullTime2 + 1)))) {
                         temp = orderedByXPUsers.Users.get(i);
                         orderedByXPUsers.Users.set(i, orderedByXPUsers.Users.get(i+1));
                         orderedByXPUsers.Users.set(i + 1, temp);
@@ -522,55 +543,60 @@ public class MainActivity extends AppCompatActivity {
             }
             for (int i = 0; i < orderedByXPUsers.Users.size(); i++) {
                 User x = orderedByXPUsers.Users.get(i);
+                int fullTime = 0;
+                for(WordUser word : orderedByXPUsers.Users.get(i).WordsForUser){
+                    fullTime += word.Time;
+                }
+                int score = x.WordsForUser.size() * (100/(fullTime + 1));
                 switch (i){
                     case (0):{
                         textView1.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView1points.setText(String.valueOf(x.XP));
+                        textView1points.setText(String.valueOf(score));
                         break;
                     }
                     case (1):{
                         textView2.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView2points.setText(String.valueOf(x.XP));
+                        textView2points.setText(String.valueOf(score));
                         break;
                     }
                     case (2):{
                         textView3.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView3points.setText(String.valueOf(x.XP));
+                        textView3points.setText(String.valueOf(score));
                         break;
                     }
                     case (3):{
                         textView4.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView4points.setText(String.valueOf(x.XP));
+                        textView4points.setText(String.valueOf(score));
                         break;
                     }
                     case (4):{
                         textView5.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView5points.setText(String.valueOf(x.XP));
+                        textView5points.setText(String.valueOf(score));
                         break;
                     }
                     case (5):{
                         textView6.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView6points.setText(String.valueOf(x.XP));
+                        textView6points.setText(String.valueOf(score));
                         break;
                     }
                     case (6):{
                         textView7.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView7points.setText(String.valueOf(x.XP));
+                        textView7points.setText(String.valueOf(score));
                         break;
                     }
                     case (7):{
                         textView8.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView8points.setText(String.valueOf(x.XP));
+                        textView8points.setText(String.valueOf(score));
                         break;
                     }
                     case (8):{
                         textView9.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView9points.setText(String.valueOf(x.XP));
+                        textView9points.setText(String.valueOf(score));
                         break;
                     }
                     case (9):{
                         textView10.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));
-                        textView10points.setText(String.valueOf(x.XP));
+                        textView10points.setText(String.valueOf(score));
                         break;
                     }
                 }
