@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                     for(WordUser word : orderedByXPUsers.Users.get(i + 1).WordsForUser){
                         fullTime2 += word.Time;
                     }
-                    if ((orderedByXPUsers.Users.get(i).WordsForUser.size() * (100/(fullTime + 1))) < (orderedByXPUsers.Users.get(i+1).WordsForUser.size() * (100/(fullTime2 + 1)))) {
+                    if ((orderedByXPUsers.Users.get(i).WordsForUser.size() * 100) / (fullTime + 1) < (orderedByXPUsers.Users.get(i + 1).WordsForUser.size() * 100) / (fullTime2 + 1)) {
                         temp = orderedByXPUsers.Users.get(i);
                         orderedByXPUsers.Users.set(i, orderedByXPUsers.Users.get(i+1));
                         orderedByXPUsers.Users.set(i + 1, temp);
@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                 for(WordUser word : orderedByXPUsers.Users.get(i).WordsForUser){
                     fullTime += word.Time;
                 }
-                int score = x.WordsForUser.size() * (100/(fullTime + 1));
+                int score = ((100 * x.WordsForUser.size()) / (fullTime + 1) );
                 switch (i){
                     case (0):{
                         textView1.setText(String.valueOf(x.UserName.trim().isEmpty() ? "Bezimeni" : x.UserName));

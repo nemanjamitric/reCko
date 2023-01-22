@@ -226,8 +226,6 @@ public class PlayActivity extends AppCompatActivity {
 
         rand = new Random();
         upperbound = gameWord.WordEn.length();
-        if(upperbound > 9)
-            upperbound = 9;
 
         int[] checked = new int[gameWord.WordEn.length()];
 
@@ -316,7 +314,7 @@ public class PlayActivity extends AppCompatActivity {
         }
         if (wordToCheck.equals(currentWord.WordEn.toUpperCase(Locale.ROOT))) {
             //show data in toast
-            Toast toast = Toast.makeText(getApplicationContext(), "Tacno!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Tačno!", Toast.LENGTH_SHORT);
             toast.show();
             userCurrent.XP += 20;
             int time = Integer.parseInt(timerTv.getText().toString().replace('s', ' ').trim()); // hardcoded
@@ -327,7 +325,7 @@ public class PlayActivity extends AppCompatActivity {
             deleteLetters();
         } else {
             //show data in toast
-            Toast toast = Toast.makeText(getApplicationContext(), "Pogresno.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Pogrešno.", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -442,7 +440,7 @@ public class PlayActivity extends AppCompatActivity {
         for(WordUser word : userCurrent.WordsForUser){
             fullTime += word.Time;
         }
-        dialog.setMessage("Ukupno ste pogodili " + userCurrent.WordsForUser.size() + " reči" + System.lineSeparator() + "Za vreme od " + String.valueOf(fullTime) + "s" + System.lineSeparator() + "I konačan skor je " + (100/(fullTime + 1) * userCurrent.WordsForUser.size()) + "!");
+        dialog.setMessage("Ukupno ste pogodili " + userCurrent.WordsForUser.size() + " reči" + System.lineSeparator() + "Za vreme od " + String.valueOf(fullTime) + "s" + System.lineSeparator() + "I konačan skor je " + ((100 * userCurrent.WordsForUser.size()) / (fullTime + 1) ) + "!");
         dialog.setTitle(isBack ? "Trenutni poeni Vaši!" : "Čestitamo prešli ste igricu!");
 
         dialog.setPositiveButton(isBack ? "Izađi iz igre." : "Super!",
@@ -456,7 +454,7 @@ public class PlayActivity extends AppCompatActivity {
                         startActivity(switchActivityIntent);
                     }
                 });
-        dialog.setNeutralButton(isBack ? "Izađi iz igre, ali ne pokazuj na lestvici." : "Super! Ne pokazuj na lestvici.",
+        dialog.setNeutralButton(isBack ? "Izađi iz igre, bez čuvanja skora." : "Super! Ne pokazuj na lestvici.",
                 new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int which)
