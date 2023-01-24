@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String userName = tv.getText().toString();
+                String userName = tv.getText().toString().replace("\n", "").replace("\r", "").trim();
                 User userGlobal = new User(userName, 0);
                 for (User user : usersGlobal.Users) {
                     if (user.UserName.equals(userName))

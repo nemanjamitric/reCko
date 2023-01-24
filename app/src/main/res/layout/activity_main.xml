@@ -390,6 +390,7 @@
                     android:paddingHorizontal="60dp"
                     android:textSize="30dp"
                     android:textAlignment="center"
+                    android:inputType="text"
                     android:textColor="@color/white"
                     android:background="@drawable/buttonwhiteoutline"
                     />
