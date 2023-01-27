@@ -19,6 +19,24 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <!--HEADER-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="28dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="23.5dp">
+
+        <ImageButton
+            android:id="@+id/language"
+            android:layout_width="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_height="47dp"
+            android:layout_weight="0"
+            android:background="@drawable/serb" />
+
+    </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,7 +76,6 @@
                 android:textAlignment="center"
                 android:textColor="@color/black" />
 
-
         </LinearLayout>
 
         <!--PRVI RED-->
@@ -86,50 +103,50 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/randLetters"
             android:layout_width="match_parent"
-            android:layout_height="450dp">
+            android:layout_height="405dp">
 
             <TextView
                 android:id="@+id/rand1"
                 android:layout_width="73dp"
                 android:layout_height="67dp"
-                android:background="@drawable/hexbuttonempty"
+                android:background="@drawable/hexbuttondisabled"
                 android:clickable="true"
                 android:gravity="center"
                 android:text="X"
                 android:textAlignment="center"
-                android:textColor="#00ff00"
+                android:textColor="#000000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.399" />
+                app:layout_constraintVertical_bias="0.402" />
 
             <TextView
                 android:id="@+id/rand3"
                 android:layout_width="73dp"
                 android:layout_height="67dp"
-                android:background="@drawable/hexbuttonempty"
-                android:clickable="true"
+                android:background="@drawable/hexbuttondisabled"
+                android:clickable="false"
                 android:gravity="center"
                 android:text="X"
                 android:textAlignment="center"
-                android:textColor="#00ff00"
+                android:textColor="#000000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.224" />
+                app:layout_constraintVertical_bias="0.171" />
 
             <TextView
                 android:id="@+id/rand4"
                 android:layout_width="73dp"
                 android:layout_height="67dp"
-                android:background="@drawable/hexbuttonempty"
-                android:clickable="true"
+                android:background="@drawable/hexbuttondisabled"
+                android:clickable="false"
                 android:gravity="center"
                 android:text="X"
                 android:textAlignment="center"
-                android:textColor="#00ff00"
+                android:textColor="#000000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.263"
@@ -141,30 +158,30 @@
                 android:id="@+id/rand5"
                 android:layout_width="73dp"
                 android:layout_height="67dp"
-                android:background="@drawable/hexbuttonempty"
-                android:clickable="true"
+                android:background="@drawable/hexbuttondisabled"
+                android:clickable="false"
                 android:gravity="center"
                 android:text="X"
                 android:textAlignment="center"
-                android:textColor="#00ff00"
+                android:textColor="#000000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.263"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.524" />
+                app:layout_constraintVertical_bias="0.568" />
 
             <TextView
                 android:id="@+id/rand6"
                 android:layout_width="73dp"
                 android:layout_height="67dp"
                 android:layout_marginStart="4dp"
-                android:background="@drawable/hexbuttonempty"
-                android:clickable="true"
+                android:background="@drawable/hexbuttondisabled"
+                android:clickable="false"
                 android:gravity="center"
                 android:text="X"
                 android:textAlignment="center"
-                android:textColor="#00ff00"
+                android:textColor="#000000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -175,12 +192,12 @@
                 android:layout_width="73dp"
                 android:layout_height="67dp"
                 android:layout_marginEnd="4dp"
-                android:background="@drawable/hexbuttonempty"
-                android:clickable="true"
+                android:background="@drawable/hexbuttondisabled"
+                android:clickable="false"
                 android:gravity="center"
                 android:text="X"
                 android:textAlignment="center"
-                android:textColor="#00ff00"
+                android:textColor="#000000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -191,16 +208,16 @@
                 android:layout_width="73dp"
                 android:layout_height="67dp"
                 android:layout_marginEnd="84dp"
-                android:background="@drawable/hexbuttonempty"
-                android:clickable="true"
+                android:background="@drawable/hexbuttondisabled"
+                android:clickable="false"
                 android:gravity="center"
                 android:text="X"
                 android:textAlignment="center"
-                android:textColor="#00ff00"
+                android:textColor="#000000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.524" />
+                app:layout_constraintVertical_bias="0.568" />
 
             <TextView
                 android:id="@+id/rand2"
@@ -208,12 +225,12 @@
                 android:layout_height="67dp"
                 android:layout_marginTop="132dp"
                 android:layout_marginEnd="84dp"
-                android:background="@drawable/hexbuttonempty"
-                android:clickable="true"
+                android:background="@drawable/hexbuttondisabled"
+                android:clickable="false"
                 android:gravity="center"
                 android:text="X"
                 android:textAlignment="center"
-                android:textColor="#00ff00"
+                android:textColor="#000000"
                 app:layout_constraintBottom_toTopOf="@+id/rand8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -223,17 +240,17 @@
                 android:id="@+id/rand9"
                 android:layout_width="73dp"
                 android:layout_height="67dp"
-                android:background="@drawable/hexbuttonempty"
-                android:clickable="true"
+                android:background="@drawable/hexbuttondisabled"
+                android:clickable="false"
                 android:gravity="center"
                 android:text="X"
                 android:textAlignment="center"
-                android:textColor="#00ff00"
+                android:textColor="#000000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.574" />
+                app:layout_constraintVertical_bias="0.63" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -249,7 +266,7 @@
                 android:id="@+id/trash"
                 android:layout_width="42dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="124dp"
                 android:background="@drawable/trash"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -269,22 +286,34 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <ImageButton
-                android:id="@+id/next"
+                android:id="@+id/sendWord"
+                android:layout_width="67dp"
+                android:layout_height="29dp"
+                android:layout_marginHorizontal="120dp"
+                android:layout_marginStart="112dp"
+                android:background="@drawable/send"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.545" />
+
+            <ImageButton
+                android:id="@+id/exit"
                 android:layout_width="42dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="196dp"
+                android:layout_marginStart="340dp"
                 android:background="@drawable/next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="20dp" />
+                app:layout_constraintGuide_end="391dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--FOOTER-->
 

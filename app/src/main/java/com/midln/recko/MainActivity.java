@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     Users usersGlobal = new Users();
     TextView tv;
     Button pocniBtn;
+    int language = 0; //0 = serb | 1 = eng
     TextView textView1,textView2,textView3,textView4,textView5,textView6,textView7,textView8,textView9,textView10;
     TextView textView1points,textView2points,textView3points,textView4points,textView5points,textView6points,textView7points,textView8points,textView9points,textView10points;
 
@@ -44,6 +47,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        language = getIntent().getIntExtra("language", 0);
+        ImageButton langPicker = (ImageButton) findViewById(R.id.language);
+        langPicker.setBackground(ContextCompat.getDrawable(getApplicationContext(), language == 0 ? R.drawable.serb : R.drawable.eng));
+
+        TextView leaderboard = (TextView) findViewById(R.id.leaderBoard);
+        leaderboard.setText(language == 0 ? "Lestvica" : "Leaderboard");
+        TextView nameLabel = (TextView) findViewById(R.id.nameFieldLabel);
+        nameLabel.setText(language == 0 ? "Unesi ime" : "Enter name");
+        Button pocniBtn = (Button) findViewById(R.id.pocniBtn);
+        pocniBtn.setText(language == 0 ? "Počni" : "Start");
 
         pocniBtn = findViewById(R.id.pocniBtn);
         tv = this.findViewById(R.id.image_view);
@@ -68,6 +82,27 @@ public class MainActivity extends AppCompatActivity {
         textView10 = this.findViewById(R.id.textView10);
         textView10points = this.findViewById(R.id.textView10points);
 
+
+        // change language
+        ImageButton lang = (ImageButton) findViewById(R.id.language);
+        lang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //change language where it is needed
+                language = language == 0 ? 1 : 0;
+
+                ImageButton langPicker = (ImageButton) findViewById(R.id.language);
+                langPicker.setBackground(ContextCompat.getDrawable(getApplicationContext(), language == 0 ? R.drawable.serb : R.drawable.eng));
+
+                TextView leaderboard = (TextView) findViewById(R.id.leaderBoard);
+                leaderboard.setText(language == 0 ? "Lestvica" : "Leaderboard");
+                TextView nameLabel = (TextView) findViewById(R.id.nameFieldLabel);
+                nameLabel.setText(language == 0 ? "Unesi ime" : "Enter name");
+                Button pocniBtn = (Button) findViewById(R.id.pocniBtn);
+                pocniBtn.setText(language == 0 ? "Počni" : "Start");
+            }
+        });
+
         pocniBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,13 +115,14 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (tv.getText().toString().equals("")) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Molimo Vas unesite vaše ime", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), language == 0 ? "Molimo Vas unesite vaše ime" : "Please enter your name", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
                     Intent switchActivityIntent = new Intent(MainActivity.this, PlayActivity.class);
                     switchActivityIntent.putExtra("wordsGlobal", wordsGlobal);
                     switchActivityIntent.putExtra("usersGlobal", usersGlobal);
                     switchActivityIntent.putExtra("userGlobal", userGlobal);
+                    switchActivityIntent.putExtra("language", language);
 
                     startActivity(switchActivityIntent);
                 }
@@ -117,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pd = new ProgressDialog(MainActivity.this);
-            pd.setMessage("Molimo sačekajte");
+            pd.setMessage(language == 0 ? "Molimo sačekajte" : "Please wait");
             pd.setCancelable(false);
             pd.show();
         }
@@ -312,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pd = new ProgressDialog(MainActivity.this);
-            pd.setMessage("Molimo sačekajte");
+            pd.setMessage(language == 0 ? "Molimo sačekajte" : "Please wait");
             pd.setCancelable(false);
             pd.show();
         }

@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -22,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 
@@ -68,6 +72,8 @@ public class PlayActivity extends AppCompatActivity {
     //global json save variable
     Users usersObjectNew = new Users();
 
+    int language = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //global values of ids for all rand letters in pizza
@@ -94,6 +100,10 @@ public class PlayActivity extends AppCompatActivity {
         wordsObject = (WordsObject) getIntent().getSerializableExtra("wordsGlobal");
         usersObject = (Users) getIntent().getSerializableExtra("usersGlobal");
         userCurrent = (User) getIntent().getSerializableExtra("userGlobal");
+        language =  getIntent().getIntExtra("language", 0);
+
+        ImageButton langPicker = (ImageButton) findViewById(R.id.language);
+        langPicker.setBackground(ContextCompat.getDrawable(getApplicationContext(), language == 0 ? R.drawable.serb : R.drawable.eng));
 
         levelTv = this.findViewById(R.id.level);
         levelProgressView = this.findViewById(R.id.progressBar2);
@@ -114,6 +124,28 @@ public class PlayActivity extends AppCompatActivity {
                 deleteLetters();
             }
         });
+        // change language
+        ImageButton lang = (ImageButton) findViewById(R.id.language);
+        lang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //change language where it is needed
+                language = language == 0 ? 1 : 0;
+
+                ImageButton langPicker = (ImageButton) findViewById(R.id.language);
+                langPicker.setBackground(ContextCompat.getDrawable(getApplicationContext(), language == 0 ? R.drawable.serb : R.drawable.eng));
+            }
+        });
+
+        // exit game
+        ImageButton exit = (ImageButton) findViewById(R.id.exit);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //exit game like back button
+                showScore(true);
+            }
+        });
         // delete letters from result
         ImageButton trash = (ImageButton) findViewById(R.id.trash);
         trash.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +155,7 @@ public class PlayActivity extends AppCompatActivity {
                 deleteLetters();
             }
         });
-        // delete letters from result
+        // delete letter by letter
         LinearLayout secondRow = (LinearLayout) findViewById(R.id.secondRow);
         secondRow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,8 +165,8 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
-        // delete letters from result
-        ImageButton next = (ImageButton) findViewById(R.id.next);
+        // send word to check
+        ImageButton next = (ImageButton) findViewById(R.id.sendWord);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +180,8 @@ public class PlayActivity extends AppCompatActivity {
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(tv.getBackground().getConstantState().equals(
+                            getResources().getDrawable(R.drawable.hexbuttonempty).getConstantState()))
                     addLetter(tv.getText().toString());
                 }
             });
@@ -178,6 +212,9 @@ public class PlayActivity extends AppCompatActivity {
         for (int i = 0; i < idsOfRandLetters.length; i++) {
             TextView randTv = randLetters.findViewById(idsOfRandLetters[i]);
             randTv.setText("X");
+            randTv.setBackground(ContextCompat.getDrawable(this, R.drawable.hexbuttondisabled));
+            randTv.setTextColor(Color.BLACK);
+            randTv.setClickable(false);
         }
 
         Random rand = new Random(); //instance of random class
@@ -250,6 +287,9 @@ public class PlayActivity extends AppCompatActivity {
             //set char in pizza letters
             TextView randTv = randLetters.findViewById(idsOfRandLetters[random]);
             randTv.setText(String.valueOf(gameWord.WordEn.charAt(i)).toUpperCase(Locale.ROOT));
+            randTv.setBackground(ContextCompat.getDrawable(this, R.drawable.hexbuttonempty));
+            randTv.setTextColor(Color.GREEN);
+            randTv.setClickable(true);
             checked[i] = random + 1;
 
             RelativeLayout rl = myView.findViewById(R.id.relativelayout);
@@ -314,7 +354,7 @@ public class PlayActivity extends AppCompatActivity {
         }
         if (wordToCheck.equals(currentWord.WordEn.toUpperCase(Locale.ROOT))) {
             //show data in toast
-            Toast toast = Toast.makeText(getApplicationContext(), "Tačno!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), language==0?"Tačno!":"Correct!", Toast.LENGTH_SHORT);
             toast.show();
             userCurrent.XP += 20;
             int time = Integer.parseInt(timerTv.getText().toString().replace('s', ' ').trim()); // hardcoded
@@ -325,7 +365,7 @@ public class PlayActivity extends AppCompatActivity {
             deleteLetters();
         } else {
             //show data in toast
-            Toast toast = Toast.makeText(getApplicationContext(), "Pogrešno.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), language==0?"Pogrešno.":"Wrong.", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -375,7 +415,7 @@ public class PlayActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pd = new ProgressDialog(PlayActivity.this);
-            pd.setMessage("Molimo sačekajte");
+            pd.setMessage(language == 0 ? "Molimo sačekajte" : "Please wait");
             pd.setCancelable(false);
             pd.show();
         }
@@ -440,10 +480,9 @@ public class PlayActivity extends AppCompatActivity {
         for(WordUser word : userCurrent.WordsForUser){
             fullTime += word.Time;
         }
-        dialog.setMessage("Ukupno ste pogodili " + userCurrent.WordsForUser.size() + " reči" + System.lineSeparator() + "Za vreme od " + String.valueOf(fullTime) + "s" + System.lineSeparator() + "I konačan skor je " + ((100 * userCurrent.WordsForUser.size()) / (fullTime + 1) ) + "!");
-        dialog.setTitle(isBack ? "Trenutni poeni Vaši!" : "Čestitamo prešli ste igricu!");
-
-        dialog.setPositiveButton(isBack ? "Izađi iz igre." : "Super!",
+        dialog.setMessage(language==0?"Ukupno ste pogodili " + userCurrent.WordsForUser.size() + " reči" + System.lineSeparator() + "Za vreme od " + String.valueOf(fullTime) + "s" + System.lineSeparator() + "I konačan skor je " + ((100 * userCurrent.WordsForUser.size()) / (fullTime + 1) ) + "!" : "The amount of correct words is " + userCurrent.WordsForUser.size() + System.lineSeparator() + "For time of " + String.valueOf(fullTime) + "s" + System.lineSeparator() + "And the score is " + ((100 * userCurrent.WordsForUser.size()) / (fullTime + 1) ) + "!" );
+        dialog.setTitle(isBack ? language == 0 ? "Trenutni poeni Vaši!" : "Your current score!" : language == 0 ? "Čestitamo prešli ste igricu!" : "Congratulations you passed the game!");
+        dialog.setPositiveButton(isBack ? language==0?"Izađi iz igre." : "Leave the game." : language == 0?"Super!" : "Great!",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
@@ -451,10 +490,11 @@ public class PlayActivity extends AppCompatActivity {
                         saveUser();
                         //send to original page after updated score
                         Intent switchActivityIntent = new Intent(PlayActivity.this, MainActivity.class);
+                        switchActivityIntent.putExtra("language",language);
                         startActivity(switchActivityIntent);
                     }
                 });
-        dialog.setNeutralButton(isBack ? "Izađi iz igre, bez čuvanja skora." : "Super! Ne pokazuj na lestvici.",
+        dialog.setNeutralButton(isBack ? language==0?"Izađi iz igre, bez čuvanja skora." : "Leave the game without saving the score" : language==0? "Super! Ne pokazuj na lestvici." : "Great! Don't show on leaderboard.",
                 new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int which)
@@ -462,14 +502,15 @@ public class PlayActivity extends AppCompatActivity {
                         //without saving to leaderboard
                         //send to original page after updated score
                         Intent switchActivityIntent = new Intent(PlayActivity.this, MainActivity.class);
+                        switchActivityIntent.putExtra("language",language);
                         startActivity(switchActivityIntent);
                     }
                 });
         if(isBack){
-            dialog.setNegativeButton("Ostani u igri.",new DialogInterface.OnClickListener() {
+            dialog.setNegativeButton(language==0?"Ostani u igri.":"Stay in the game.",new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getApplicationContext(),"Ostajem u igri, idemo!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),language==0?"Ostajem u igri, idemo!": "Staying in the game.  Lets go!",Toast.LENGTH_LONG).show();
                 }
             });
         }
